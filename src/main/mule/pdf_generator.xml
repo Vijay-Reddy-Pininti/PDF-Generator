@@ -1,0 +1,934 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="f0cdde36-9104-412a-904e-5758f5a87d2c" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="pdf_generatorFlow" doc:id="d8c8ab7b-8d24-4744-8b62-632e1d8fcf5f" >
+		<http:listener doc:name="Listener" doc:id="e35e5be0-cf58-4c09-9732-4c4e6e28e950" config-ref="HTTP_Listener_config" path="/api/v1/generatePdf">
+			<http:response >
+				<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Content-Disposition" : "attachment; filename=bill.pdf"
+}]]]></http:headers>
+			</http:response>
+		</http:listener>
+		<ee:transform doc:name="input_payload" doc:id="f33b67a5-954a-4b5f-97f8-ae63d15dd71c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+    "statmentDetails": {
+        "accountDetails": {
+            "accountAddress": {
+                "stateName": "NY",
+                "countryName": "US",
+                "cityName": "Williamsville",
+                "streetName": "Amherst Drive"
+            },
+            "accountName": {
+                "givenNames": "Vijay Reddy",
+                "surname": "Pininti"
+            },
+            "accountNo": "1292024",
+            "bbf": {
+                "id": "0",
+                "itemised": "false",
+                "value": "5922.04"
+            },
+            "billDate": "2022-03-13T00:00:00-04:00",
+            "billTotals": {
+                "id": "0",
+                "itemised": "false",
+                "value": "12064.28"
+            },
+            "currentStatementTotals": {
+                "id": "0",
+                "itemised": "false",
+                "value": "6142.24"
+            },
+            "paymentTotals": {
+                "id": "0",
+                "itemised": "false",
+                "value": "0.0"
+            },
+            "periodEndDate": "2022-04-12T00:00:00-04:00",
+            "periodStartDate": "2022-03-13T00:00:00-04:00"
+        },
+        "allowancesItem": [
+            {
+                "allowanceEndDate": "2022-03-12T00:00:00-04:00",
+                "allowanceName": "WorldPak",
+                "allowanceStartDate": "2022-02-13T00:00:00-04:00",
+                "asOfStartTime": "2022-08-11T04:09:10-04:00",
+                "currentAllowance": "300",
+                "currentUsage": "0",
+                "equipId": "12280037",
+                "remainingAllowance": "300",
+                "shared": "No",
+                "unitOfMeasure": "MIN"
+            },
+            {
+                "allowanceEndDate": "2022-03-12T00:00:00-04:00",
+                "allowanceName": "Shared Net",
+                "allowanceStartDate": "2022-02-13T00:00:00-04:00",
+                "asOfStartTime": "2022-08-11T04:09:10-04:00",
+                "currentAllowance": "1000",
+                "currentUsage": "22",
+                "equipId": "12280037",
+                "remainingAllowance": "977",
+                "shared": "No",
+                "unitOfMeasure": "MIN"
+            },
+            {
+                "allowanceEndDate": "2022-03-12T00:00:00-04:00",
+                "allowanceName": "Fixed Minutes",
+                "allowanceStartDate": "2022-02-13T00:00:00-04:00",
+                "asOfStartTime": "2022-08-11T04:09:10-04:00",
+                "currentAllowance": "100",
+                "currentUsage": "0",
+                "equipId": "12280020",
+                "remainingAllowance": "100",
+                "shared": "No",
+                "unitOfMeasure": "MIN"
+            },
+            {
+                "allowanceEndDate": "2022-03-12T00:00:00-04:00",
+                "allowanceName": "Fixed Minutes",
+                "allowanceStartDate": "2022-02-13T00:00:00-04:00",
+                "asOfStartTime": "2022-08-11T04:09:10-04:00",
+                "currentAllowance": "100",
+                "currentUsage": "0",
+                "equipId": "12280037",
+                "remainingAllowance": "100",
+                "shared": "No",
+                "unitOfMeasure": "MIN"
+            },
+            {
+                "allowanceEndDate": "2022-03-12T00:00:00-04:00",
+                "allowanceName": "Fixed Minutes",
+                "allowanceStartDate": "2022-02-13T00:00:00-04:00",
+                "asOfStartTime": "2022-08-11T04:09:10-04:00",
+                "currentAllowance": "100",
+                "currentUsage": "0",
+                "equipId": "12280024",
+                "remainingAllowance": "100",
+                "shared": "No",
+                "unitOfMeasure": "MIN"
+            },
+            {
+                "allowanceEndDate": "2022-03-12T00:00:00-04:00",
+                "allowanceName": "Shared Net",
+                "allowanceStartDate": "2022-02-13T00:00:00-04:00",
+                "asOfStartTime": "2022-08-11T04:09:10-04:00",
+                "currentAllowance": "500",
+                "currentUsage": "11",
+                "equipId": "12280037",
+                "remainingAllowance": "488",
+                "shared": "No",
+                "unitOfMeasure": "MIN"
+            }
+        ],
+        "generalBillInfoItem": [
+            {
+                "accessNo": "0001329211",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "serviceCodeDescription": "Digital Video",
+                "tariffCodeDescription": "Video Recording",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Monthly Charge",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "accessNo": "0001329211",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "Standard Rate",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "serviceCodeDescription": "Digital Video",
+                "tariffCodeDescription": "Video Recording",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Spark",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "100.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "salesTaxCodeDescription": "Standard Rate",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "tariffCodeDescription": "Print Fee",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Monthly Charge",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "115.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "accessNo": "0001329212",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "Standard Rate",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "serviceCodeDescription": "Data",
+                "tariffCodeDescription": "Bundle",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Monthly Charge",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "accessNo": "0001329211",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "Standard Rate",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "serviceCodeDescription": "Digital Video",
+                "tariffCodeDescription": "Bundle",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Monthly Charge",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "accessNo": "8766156",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "serviceCodeDescription": "Voice",
+                "tariffCodeDescription": "Bundle Benefits Access Voice",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Monthly Charge",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "tariffCodeDescription": "Bundled Spark",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Package",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "accessNo": "0001329212",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "2764.22"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "414.63"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "serviceCodeDescription": "Data",
+                "tariffCodeDescription": "Bundled Spark",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Spark",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "3178.85"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "accessNo": "0001329211",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "serviceCodeDescription": "Digital Video",
+                "tariffCodeDescription": "Digital Fee",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Monthly Charge",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "tariffCodeDescription": "Home Phone Essential",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Package Charge",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "accessNo": "8766156",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "1058.86"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "264.72"
+                },
+                "salesTaxCodeDescription": "25 Percent",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "25.0"
+                },
+                "serviceCodeDescription": "Voice",
+                "tariffCodeDescription": "Home Phone",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Spark",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "1323.58"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "tariffCodeDescription": "Modem - Wireless",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Monthly Charge",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "150.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "22.5"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "tariffCodeDescription": "Modem Rental Charge",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Monthly Charge",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "172.5"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "accessNo": "0001329211",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "serviceCodeDescription": "Digital Video",
+                "tariffCodeDescription": "Set Top Box",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Monthly Charge",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "accessNo": "876615",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "serviceCodeDescription": "Voice",
+                "tariffCodeDescription": "Spark",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Spark",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "tariffCodeDescription": "Spark Bundle Benefits",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Package Charge",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "accessNo": "876615",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "serviceCodeDescription": "Voice",
+                "tariffCodeDescription": "Lite",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Spark",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "tariffCodeDescription": "TV",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Package Charge",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "0.0"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "accessNo": "0001329211",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "1175.92"
+                },
+                "memoDateFromTo": "13 Mar - 12 Apr",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "176.39"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "15.0"
+                },
+                "serviceCodeDescription": "Digital Video",
+                "tariffCodeDescription": "TV",
+                "tariffQuantity": "1",
+                "tariffSuffixDescription": "Spark",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "1352.31"
+                },
+                "transcodeDescription": "Rental Charges"
+            },
+            {
+                "accessNo": "876615",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "66.64"
+                },
+                "memoDateFromTo": "13 FEB - 25 FEB",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "16.66"
+                },
+                "salesTaxCodeDescription": "25 Percent",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "25.0"
+                },
+                "serviceCodeDescription": "Voice",
+                "tariffCodeDescription": null,
+                "tariffQuantity": "34",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "83.3"
+                },
+                "transcodeDescription": "National Calls"
+            },
+            {
+                "accessNo": "876615",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "1.0E-40"
+                },
+                "memoDateFromTo": "24 FEB - 24 FEB",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "1.0E-40"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "25.0"
+                },
+                "salesTaxVersion": "1",
+                "serviceCodeDescription": "Voice",
+                "tariffCodeDescription": null,
+                "tariffQuantity": "2",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "1.0E-40"
+                },
+                "transcodeDescription": "National Calls"
+            },
+            {
+                "accessNo": "87661",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "-32.6"
+                },
+                "memoDateFromTo": "13 FEB - 25 FEB",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "-8.15"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "25.0"
+                },
+                "serviceCodeDescription": "Voice",
+                "tariffCodeDescription": null,
+                "tariffQuantity": "14",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "-40.75"
+                },
+                "transcodeDescription": "Usage"
+            },
+            {
+                "accessNo": "8766",
+                "amountBeforeTax": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "-34.04"
+                },
+                "memoDateFromTo": "13 FEB - 25 FEB",
+                "salesTaxAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "-8.51"
+                },
+                "salesTaxCodeDescription": "GCT",
+                "salesTaxRate": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "25.0"
+                },
+                "serviceCodeDescription": "Voice",
+                "tariffCodeDescription": null,
+                "tariffQuantity": "20",
+                "transAmount": {
+                    "id": "0",
+                    "itemised": "false",
+                    "value": "-42.55"
+                },
+                "transcodeDescription": "Usage"
+            }
+        ]
+    }
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transformation_to_PDF_input" doc:id="7ff5be7a-c479-44ce-9760-ac23dda8c099" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var statementDetails = payload.statmentDetails
+var accountRelatedCharges = payload.statmentDetails.generalBillInfoItem filter $.transAmount.value != "0.0" and isEmpty($.accessNo) map
+{
+    "period": $.memoDateFromTo,
+    "description": ([$.tariffCodeDescription default ""] ++ [$.tariffSuffixDescription  default ""] ++ [$.transcodeDescription  default ""]) filter ((descriptionItem, descriptionIndex) -> descriptionItem != "") joinBy " - ",
+    "quantity": $.tariffQuantity,
+    "beforeTax": $.amountBeforeTax.value,
+    "taxAmount": $.salesTaxAmount.value,
+    "afterTax": $.transAmount.value
+}
+var serviceCharges = ((statementDetails.generalBillInfoItem filter $.transAmount.value != '0.0'  map
+	{
+	    "accessNo": ((($.serviceCodeDescription default "") ++ " - " ++ ($.accessNo default "")) splitBy " - " filter !isEmpty($) reduce ($$ ++ " - " ++ $)) default "",
+	    "period": $.memoDateFromTo,
+	    "description": if(!isEmpty($.discountProfileGroupDescription)) ($.discountProfileGroupDescription) else ((($.tariffCodeDescription default "") ++ " - " ++ ($.tariffSuffixDescription default "") ++ " - " ++ ($.transcodeDescription default "")) splitBy " - " filter (!isEmpty($)) reduce ($$ ++ " - " ++ $)),
+	    "quantity": $.tariffQuantity,
+	    "beforeTax": $.amountBeforeTax.value,
+	    "taxAmount": $.salesTaxAmount.value,
+	    "afterTax": $.transAmount.value
+	}) filter !isEmpty($.accessNo)) groupBy($.accessNo)
+---
+{
+    "accountCharacteristics": [
+        ({
+            "name": "Account Number",
+            "value": statementDetails.accountDetails.accountNo
+        }) if(!isEmpty(statementDetails.accountDetails.accountNo)),
+        ({
+            "name": "Account Name",
+            "value": (statementDetails.accountDetails.accountName.givenNames default "") ++ " " ++ (statementDetails.accountDetails.accountName.surname default "") 
+        }) if(!isEmpty((statementDetails.accountDetails.accountName.forenamesInitials default "") ++ " " ++ (statementDetails.accountDetails.accountName.surnameCompanyName default "") )),
+        ({
+            "name": "Billing Address",
+            "value": (statementDetails.accountDetails.accountAddress.streetName default "") ++ " , " ++ (statementDetails.accountDetails.accountAddress.cityName default "") ++ " , " ++ (statementDetails.accountDetails.accountAddress.stateName default "") ++ " , " ++ (statementDetails.accountDetails.accountAddress.countryName default "")
+        }) if(!isEmpty(((statementDetails.accountDetails.accountAddress.streetName default "") ++ " , " ++ (statementDetails.accountDetails.accountAddress.placeName default "") ++ " , " ++ (statementDetails.accountDetails.accountAddress.areaName default "") ++ " , " ++ (statementDetails.accountDetails.accountAddress.countryName default "")))),
+        ({
+            "name": "Who Pays",
+            "value": statementDetails.accountDetails.accountNo
+        }) if(!isEmpty(statementDetails.accountDetails.accountNo)),
+        ({
+            "name": "Bill Date",
+            "value": (statementDetails.accountDetails.billDate default "") as DateTime as String {format: "MM/dd/yyyy"}
+        }) if(!isEmpty(statementDetails.accountDetails.billDate))
+    ],
+    "billCharacteristics": [
+        {
+            "name": "RequestedDate",
+            "value": now() as DateTime as String {format: "MM/dd/yyyy hh:mm a"}
+        },
+        ({
+            "name": "Period Covered",
+            "value": (statementDetails.accountDetails.periodStartDate default "") as DateTime as String {format: "MM/dd/yyyy"} ++ " to " ++ (statementDetails.accountDetails.periodEndDate default "") as DateTime as String {format: "MM/dd/yyyy"} 
+        }) if(!isEmpty(statementDetails.accountDetails.periodStartDate) and !isEmpty(statementDetails.accountDetails.periodEndDate)),
+        ({
+            "name": "Bill Balance Brought Forward",
+            "value": statementDetails.accountDetails.bbf.value
+        }) if(!isEmpty(statementDetails.accountDetails.bbf.value)),
+        ({
+            "name": "Payments Received/Adjustments",
+            "value": statementDetails.accountDetails.paymentTotals.value
+        }) if(!isEmpty(statementDetails.accountDetails.paymentTotals.value)),
+        ({
+            "name": "Current Statement Total",
+            "value": statementDetails.accountDetails.currentStatementTotals.value
+        }) if(!isEmpty(statementDetails.accountDetails.currentStatementTotals.value)),
+        ({
+            "name": "Outstanding Statement Total",
+            "value": statementDetails.accountDetails.billTotals.value
+        }) if(!isEmpty(statementDetails.accountDetails.billTotals.value))
+    ],
+    "accountCharges": accountRelatedCharges ++ [{
+        "period": "",
+        "description": "Total",
+        "quantity": "",
+        "beforeTax": sum(accountRelatedCharges map $.beforeTax as Number) as String {format: "#.##"},
+        "taxAmount": sum(accountRelatedCharges map $.taxAmount as Number) as String {format: "#.##"},
+        "afterTax": sum(accountRelatedCharges map $.afterTax as Number) as String {format: "#.##"}
+    }],
+	"serviceCharges": serviceCharges mapObject ((value, key, index) -> 
+	{
+	    (key): value ++ [{
+	    "accessNo": "",
+	    "period": "",
+	    "description": if(lower(key) contains "voice") "Total Voice" else if(lower(key) contains "data") "Total Data" else "Total Digital Video",
+	    "quantity": "",
+	    "beforeTax": sum(value.beforeTax) as String {format: "#.##"},
+	    "taxAmount": sum(value.taxAmount) as String {format: "#.##"},
+	    "afterTax": sum(value.afterTax) as String {format: "#.##"}
+	    }]
+	}),
+	"usageCharges": statementDetails.allowancesItem map
+	{
+	    "allowanceName": $.allowanceName,
+	    "suppliedTo": $.equipId,
+	    "startDate": $.allowanceStartDate as DateTime as String {format: "MM/dd/yyyy"},
+	    "endDate": $.allowanceEndDate as DateTime as String {format: "MM/dd/yyyy"},
+	    "units": $.unitOfMeasure,
+	    "totalAmount": $.currentAllowance,
+	    "amountUsed": $.currentUsage,
+	    "remaining": $.remainingAllowance,
+	    "expiring": $.remainingAllowance,
+	    "shared": $.shared,
+	    "dateTime": $.asOfStartTime as DateTime as String {format: "MM/dd/yyyy hh:mm a"}
+	} 
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="generate_pdf" doc:id="787137ca-023f-40ec-8ef6-179db1aa84a5" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+import java!com::vj::GeneratePdf
+output application/java
+---
+GeneratePdf::generatePdf(write(payload,"application/json"))]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
