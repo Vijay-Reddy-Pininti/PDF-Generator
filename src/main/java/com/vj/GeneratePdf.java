@@ -188,19 +188,13 @@ public class GeneratePdf
 			final JSONObject usageCharge = usageCharges.getJSONObject(i);
 			if (i == 0)
 			{
-				Cell usageChargeCell = new Cell().add(new Paragraph("Usage Allowance Ballance")).setFont(font).setFontColor(ColorConstants.WHITE);
-				usageChargeCell.setBackgroundColor(ColorConstants.BLACK);
+				Cell usageChargeCell = new Cell(1, 11)
+						.add(new Paragraph("Usage Allowance Ballance"))
+						.setFont(font)
+						.setBackgroundColor(ColorConstants.BLACK)
+						.setTextAlignment(TextAlignment.CENTER)
+						.setFontColor(ColorConstants.WHITE);
 				usageChargesTable.addCell(usageChargeCell).setFontSize(10f);
-				usageChargesTable.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(ColorConstants.BLACK));
-				usageChargesTable.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(ColorConstants.BLACK));
-				usageChargesTable.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(ColorConstants.BLACK));
-				usageChargesTable.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(ColorConstants.BLACK));
-				usageChargesTable.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(ColorConstants.BLACK));
-				usageChargesTable.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(ColorConstants.BLACK));
-				usageChargesTable.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(ColorConstants.BLACK));
-				usageChargesTable.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(ColorConstants.BLACK));
-				usageChargesTable.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(ColorConstants.BLACK));
-				usageChargesTable.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(ColorConstants.BLACK));
 				usageChargesTable.addCell(new Cell().add(new Paragraph("Allowance Name")));
 				usageChargesTable.addCell(new Cell().add(new Paragraph("Supplied To")));
 				usageChargesTable.addCell(new Cell().add(new Paragraph("Start Date")));
@@ -212,32 +206,18 @@ public class GeneratePdf
 				usageChargesTable.addCell(new Cell().add(new Paragraph("Expiring")));
 				usageChargesTable.addCell(new Cell().add(new Paragraph("Shared")));
 				usageChargesTable.addCell(new Cell().add(new Paragraph("Date/Time")));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("allowanceName"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("suppliedTo"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("startDate"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("endDate"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("units"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("totalAmount"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("amountUsed"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("remaining"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("expiring"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("shared"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("dateTime"))));
 			}
-			else
-			{
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("allowanceName"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("suppliedTo"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("startDate"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("endDate"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("units"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("totalAmount"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("amountUsed"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("remaining"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("expiring"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("shared"))));
-				usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("dateTime"))));
-			}
+			usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("allowanceName"))));
+			usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("suppliedTo"))));
+			usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("startDate"))));
+			usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("endDate"))));
+			usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("units"))));
+			usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("totalAmount"))));
+			usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("amountUsed"))));
+			usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("remaining"))));
+			usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("expiring"))));
+			usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("shared"))));
+			usageChargesTable.addCell(new Cell().add(new Paragraph((String) usageCharge.get("dateTime"))));
 		}
 		
 		document.add(accountTable);
