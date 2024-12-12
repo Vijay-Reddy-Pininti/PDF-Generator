@@ -30,8 +30,41 @@ Here are the awesome tools we used:
 - **Dynamic Data Transformation**: Designed MuleSoft flows to extract, transform, and load JSON data in real-time. Integrated Java-based libraries to convert structured JSON into visually appealing PDF formats.
 - **Scalability and Flexibility**: In Progres....
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+<!-- USAGE -->
+
+## Usage
+
+To use this project and generate custom PDFs from JSON data, follow these steps:
+
+1. **Clone the Repository**:  
+   ```bash
+   git clone https://github.com/Vijay-Reddy-Pininti/PDF-Generator.git
+   cd PDF-Generator
+   ```
+
+2. **Install Prerequisites**:  
+   - Ensure that **Java8** and **MuleSoft Anypoint Studio** are installed on your system.
+
+3. **Set Up MuleSoft**:  
+   - Open Anypoint Studio and import the Mule application from the cloned repository.
+   - Configure the required changes such as JSON data source.
+
+4. **Run the Mule Flow**:  
+   - Run the Mule application locally from Anypoint Studio.
+   - The Mule flow will extract and transform the incoming JSON data and generate the corresponding PDF.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 <!-- CONCLUSION -->
 ## Conclusion
 
 By leveraging MuleSoft's integration capabilities and Java's processing power, the project delivered a scalable, reliable, and user-friendly solution for dynamic bill generation.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- ACKNOWLEDGEMENT -->
+## Acknowledgements
+
+I would like to express my sincere gratitude to [Nagaraj Nagunoori](https://www.linkedin.com/in/nagarajnangunoori/) for their invaluable guidance and encouragement throughout this project. Their insights played a crucial role in overcoming challenges and driving the project to successful completion.
