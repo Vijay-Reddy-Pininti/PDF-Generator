@@ -53,6 +53,13 @@ To use this project and generate custom PDFs from JSON data, follow these steps:
 4. **Run the Mule Flow**:  
    - Run the Mule application locally from Anypoint Studio.
    - The Mule flow will extract and transform the incoming JSON data and generate the corresponding PDF.
+   
+5. **Test the application**:
+
+```bash
+   http://localhost:8081/api/v1/generatePdf
+```
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
