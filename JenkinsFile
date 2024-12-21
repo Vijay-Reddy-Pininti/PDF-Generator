@@ -8,12 +8,7 @@ pipeline {
     }
 
     stages {
-        stage('Git version') {
-            steps {
-                sh 'git --version'
-            }
-        }
-
+        
         stage('Clone Repository') {
             steps {
                 echo 'Cloning GitHub repository...'
@@ -24,7 +19,7 @@ pipeline {
         stage('Build Application') {
             steps {
                 echo 'Building application...'
-                sh './mvn clean package -DskipTests'
+                sh 'mvn clean package -DskipTests'
             }
         }
 		
