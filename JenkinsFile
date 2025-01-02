@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         MULE_SERVER_USER = 'ubuntu'
-        MULE_SERVER_IP = '3.135.199.82'
+        MULE_SERVER_IP = '18.218.91.22'
         MULE_DEPLOY_DIR = '/home/ubuntu/mule-enterprise-standalone-4.8.1/apps'
     }
 
