@@ -45,7 +45,7 @@ pipeline {
             steps {
                 echo 'Deploying to Mule standalone server...'
                 sh """
-                scp -o StrictHostKeyChecking=no ${env.BUILT_JAR} ${MULE_SERVER_USER}@${MULE_SERVER_IP}:${MULE_DEPLOY_DIR}/
+                scp ${env.BUILT_JAR} ${MULE_SERVER_USER}@${MULE_SERVER_IP}:${MULE_DEPLOY_DIR}/
                 ssh ${MULE_SERVER_USER}@${MULE_SERVER_IP} "ls -l ${MULE_DEPLOY_DIR}"
                 """
             }
