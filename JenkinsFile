@@ -56,7 +56,7 @@ pipeline {
         success {
             echo 'Deployment completed successfully!'
             cleanWs()
-            echo 'Workspace cleaned!'
+            echo 'Workspace cleaned successfully!'
         }
         failure {
             echo 'Deployment failed!'
