@@ -1,0 +1,65 @@
+pipeline {
+    agent any
+
+    environment {
+        MULE_SERVER_USER = 'ubuntu'
+        MULE_SERVER_IP = '18.218.91.22'
+        MULE_DEPLOY_DIR = '/home/ubuntu/mule-enterprise-standalone-4.8.1/apps'
+    }
+
+    tools {
+        jdk 'Java8'
+    }
+
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                echo 'Cloning GitHub repository...'
+                git branch: "development", url: "https://github.com/Vijay-Reddy-Pininti/PDF-Generator.git"
+            }
+        }
+
+        stage('Build Application') {
+            steps {
+                echo 'Building application...'
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+		
+		stage('Get Artifact') {
+            steps {
+                echo 'Finding built JAR file...'
+                script {
+                    def jarFiles = sh(script: "ls target/*.jar", returnStdout: true).trim().split("\n")
+                    if (jarFiles.size() == 0) {
+                        error "No JAR files found in target directory."
+                    }
+                    env.BUILT_JAR = jarFiles[0]
+                    echo "Found JAR file: ${env.BUILT_JAR}"
+                }
+            }
+        }
+
+        stage('Deploy to Mule Server') {
+            steps {
+                echo 'Deploying to Mule standalone server...'
+                sh """
+                scp ${env.BUILT_JAR} ${MULE_SERVER_USER}@${MULE_SERVER_IP}:${MULE_DEPLOY_DIR}/
+                ssh ${MULE_SERVER_USER}@${MULE_SERVER_IP} "ls -l ${MULE_DEPLOY_DIR}"
+                """
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment completed successfully!'
+            cleanWs()
+            echo 'Workspace cleaned successfully!'
+        }
+        failure {
+            echo 'Deployment failed!'
+        }
+    }
+}
