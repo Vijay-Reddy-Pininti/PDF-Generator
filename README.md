@@ -56,8 +56,16 @@ To use this project and generate custom PDFs from JSON data, follow these steps:
    
 5. **Test the application**:
 
+<p>Local Testing</p>
+
 ```bash
    http://localhost:8081/api/v1/generatePdf
+```
+
+<p>Server Testing</p>
+
+```bash
+    http://ec2-18-218-91-22.us-east-2.compute.amazonaws.com:8081/api/v1/generatePdf
 ```
 
 
