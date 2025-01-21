@@ -7,6 +7,10 @@ pipeline {
         MULE_DEPLOY_DIR = '/home/ubuntu/mule-enterprise-standalone-4.8.1/apps/'
     }
 
+    tools {
+        jdk 'JDK8'
+    }
+
     stages {
 
         stage('Clone Repository') {
